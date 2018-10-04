@@ -88,10 +88,7 @@ jobs:
           command: |
             ARTIFACTS="/tmp/circle_artifacts"
             mkdir -p "$ARTIFACTS"
-            cp -v "app/build/reports/checkstyle/checkstyle.xml" "$ARTIFACTS/"
-            cp -v "app/build/reports/findbugs/findbugs.xml" "$ARTIFACTS/"
-            cp -v "app/build/reports/pmd/pmd.xml" "$ARTIFACTS/"
-            cp -v "app/build/reports/pmd/cpd.xml" "$ARTIFACTS/"
+            cp -v "app/build/reports/ktlint/ktlint-debug.xml" "$ARTIFACTS/"
             cp -v "app/build/reports/lint-results.xml" "$ARTIFACTS/"
       - save_cache:
           paths:
