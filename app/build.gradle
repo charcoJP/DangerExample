@@ -88,6 +88,8 @@ task findbugs(type: FindBugs) {
         html.enabled = false
     }
 
+    include '**/*.java'
+
     classes = files("build/intermediates/javac/")
     source 'src/main'
     classpath = files()
