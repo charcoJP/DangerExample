@@ -11,6 +11,9 @@ github.dismiss_out_of_range_messages
 checkstyle_format.base_path = Dir.pwd
 
 # checkstyle
+checkstyle_format.report 'app/build/reports/checkstyle/checkstyle.xml'
+
+# ktlint
 checkstyle_format.report 'app/build/reports/ktlint/ktlint-debug.xml'
 
 # Android Lint
