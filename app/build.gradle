@@ -80,7 +80,7 @@ findbugs {
     excludeFilter = file("$rootProject.projectDir/config/quality/findbugs-filter.xml")
 }
 
-task findbugs(type: FindBugs) {
+task findbugs(type: FindBugs, dependsOn: "assembleDebug") {
     group 'verification'
 
     reports {
