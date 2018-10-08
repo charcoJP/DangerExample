@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">DangerExample</string>
+
+    <string name="unused_string">~_~</string>
 </resources>

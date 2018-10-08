@@ -1,8 +1,12 @@
+import org.jlleitschuh.gradle.ktlint.ReporterType
+
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
+apply plugin: "org.jlleitschuh.gradle.ktlint"
+apply plugin: 'checkstyle'
+
+check.dependsOn 'checkstyle'
 
 android {
     compileSdkVersion 28
@@ -20,6 +24,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
@@ -31,3 +38,35 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }
+
+
+ktlint {
+    version = "0.22.0"
+    debug = true
+    verbose = true
+    android = true
+    reporter = ReporterType.CHECKSTYLE
+    ignoreFailures = true
+}
+
+checkstyle {
+    toolVersion '8.11'
+    configFile file("${project.rootDir}/config/quality/checkstyle.xml")
+    reportsDir = file("${project.buildDir}/reports/checkstyle")
+    showViolations = true
+    ignoreFailures = true
+}
+task checkstyle(type: Checkstyle) {
+    group = 'verification'
+
+    source 'src'
+    include '**/*.java'
+    exclude '**/gen/**', '**/test/**'
+
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+    classpath = files(file("${project.buildDir}/intermediates/classes"))
+}
+
