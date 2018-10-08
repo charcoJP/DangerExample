@@ -5,8 +5,9 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: "org.jlleitschuh.gradle.ktlint"
 apply plugin: 'checkstyle'
+apply plugin: 'findbugs'
 
-check.dependsOn 'checkstyle'
+check.dependsOn 'checkstyle', 'findbugs'
 
 android {
     compileSdkVersion 28
@@ -67,6 +68,28 @@ task checkstyle(type: Checkstyle) {
         xml.enabled = true
         html.enabled = true
     }
-    classpath = files(file("${project.buildDir}/intermediates/classes"))
+    classpath = files(file("${project.buildDir}/intermediates/javac"))
+}
+
+findbugs {
+    toolVersion = "3.0.1" // java8
+    ignoreFailures = true
+    reportsDir = file("$project.buildDir/reports/findbugs")
+    effort = "max"
+    reportLevel = "low"
+    excludeFilter = file("$rootProject.projectDir/config/quality/findbugs-filter.xml")
+}
+
+task findbugs(type: FindBugs) {
+    group 'verification'
+
+    reports {
+        xml.enabled = true
+        html.enabled = false
+    }
+
+    classes = files("build/intermediates/javac/")
+    source 'src/main'
+    classpath = files()
 }
 
