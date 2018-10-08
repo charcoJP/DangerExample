@@ -21,3 +21,8 @@ android_lint.gradle_task = "app:lint"
 android_lint.report_file = "app/build/reports/lint-results.xml"
 android_lint.filtering = true # 新規追加, 変更のみを対象とする
 android_lint.lint
+
+# Findbugs
+require 'findbugs_translate_checkstyle_format'
+findbugs_xml = ::FindbugsTranslateCheckstyleFormat::Script.translate(File.read('app/build/reports/findbugs/findbugs.xml'))
+checkstyle_format.report_by_text findbugs_xml
